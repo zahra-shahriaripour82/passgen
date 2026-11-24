@@ -32,13 +32,40 @@ fn generate(charset: &Vec<char>, length: usize) -> String {
 
     password
 }
+
+fn count_kinds(password: &String) -> (usize, usize, usize, usize) {
+    let mut lower = 0;
+    let mut upper = 0;
+    let mut digits = 0;
+    let mut symbols = 0;
+    for c in password.chars() {
+        if c.is_ascii_lowercase() {
+            lower += 1
+        }
+        if c.is_ascii_uppercase() {
+            upper += 1
+        }
+        if c.is_ascii_digit() {
+            digits += 1
+        } else {
+            symbols += 1
+        }
+    }
+
+    (lower, upper, digits, symbols)
+}
+
 fn main() {
     let charset = build_charset(true, true, true);
     println!("Charset has {} characters", charset.len());
 
     for _ in 0..3 {
         let password = generate(&charset, 16);
-        println!("{}", password);
+        let (lower, upper, digits, symbols) = count_kinds(&password);
+        println!(
+            "{}  (lower: {}, upper: {}, digits: {}, symbols: {})",
+            password, lower, upper, digits, symbols
+        );
     }
 
     let simple = build_charset(false, true, false);
