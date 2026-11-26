@@ -55,10 +55,22 @@ fn count_kinds(password: &String) -> (usize, usize, usize, usize) {
     (lower, upper, digits, symbols)
 }
 
+fn add_to_history(history: &mut Vec<String>, password: String) {
+    history.push(password);
+}
+
+fn print_history(history: &Vec<String>) {
+    println!("--- History ({} passwords) ---", history.len());
+
+    for i in 0..history.len() {
+        println!("{}. {}", i + 1, history[i])
+    }
+}
+
 fn main() {
     let charset = build_charset(true, true, true);
     println!("Charset has {} characters", charset.len());
-
+    let mut history = Vec::new();
     for _ in 0..3 {
         let password = generate(&charset, 16);
         let (lower, upper, digits, symbols) = count_kinds(&password);
@@ -66,7 +78,10 @@ fn main() {
             "{}  (lower: {}, upper: {}, digits: {}, symbols: {})",
             password, lower, upper, digits, symbols
         );
+        add_to_history(&mut history, password);
     }
+
+    print_history(&history);
 
     let simple = build_charset(false, true, false);
     println!("Only lowercase + digits: {}", generate(&simple, 12));
