@@ -21,7 +21,7 @@ fn add_chars(charset: &mut Vec<char>, chars: &str) {
     }
 }
 
-fn generate(charset: &Vec<char>, length: usize) -> String {
+fn generate(charset: &[char], length: usize) -> String {
     let mut rng = rand::thread_rng();
     let mut password = String::new();
 
@@ -33,7 +33,7 @@ fn generate(charset: &Vec<char>, length: usize) -> String {
     password
 }
 
-fn count_kinds(password: &String) -> (usize, usize, usize, usize) {
+fn count_kinds(password: &str) -> (usize, usize, usize, usize) {
     let mut lower = 0;
     let mut upper = 0;
     let mut digits = 0;
@@ -59,7 +59,7 @@ fn add_to_history(history: &mut Vec<String>, password: String) {
     history.push(password);
 }
 
-fn print_history(history: &Vec<String>) {
+fn print_history(history: &[String]) {
     println!("--- History ({} passwords) ---", history.len());
 
     for i in 0..history.len() {
